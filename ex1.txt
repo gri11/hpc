@@ -1,0 +1,3 @@
+add benchmark=0.056684 s
+add_avx benchmark=0.009861 s
+speedup=5.748123
