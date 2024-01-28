@@ -37,7 +37,7 @@ void add_avx(int size, int *a, int *b)
 
 float benchmark(void (*f)(int, int *, int *), int num_test)
 {
-    float results[num_test];
+    float results[num_test], min = 100., max = 0.;
 
     const int SIZE = 1e6;
     int a[SIZE], b[SIZE];
@@ -49,11 +49,21 @@ float benchmark(void (*f)(int, int *, int *), int num_test)
         float endTime = (float)clock() / CLOCKS_PER_SEC;
         float timeElapsed = endTime - startTime;
         results[i] = timeElapsed;
+
+        if (timeElapsed < min)
+            min = timeElapsed;
+
+        if (timeElapsed > max)
+            max = timeElapsed;
     }
 
     float result = 1;
-    for (int i = 1; i < num_test - 1; i++)
+    for (int i = 0; i < num_test; i++)
     {
+        if (results[i] == min)
+            continue;
+        if (results[i] == max)
+            continue;
         result *= results[i];
     }
 
@@ -67,6 +77,17 @@ int main()
     printf("add benchmark=%f s\n", add_result);
     printf("add_avx benchmark=%f s\n", add_avx_result);
     printf("speedup=%f\n", add_result / add_avx_result);
+
+    // Write to `ex1.txt`
+    FILE *fptr;
+
+    fptr = fopen("ex1.txt", "w");
+
+    fprintf(fptr, "add benchmark=%f s\n", add_result);
+    fprintf(fptr, "add_avx benchmark=%f s\n", add_avx_result);
+    fprintf(fptr, "speedup=%f\n", add_result / add_avx_result);
+
+    fclose(fptr);
 
     return 0;
 }
