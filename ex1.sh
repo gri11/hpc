@@ -1,1 +1,0 @@
-gcc -mavx2 ex1.c -lm && ./a.out
