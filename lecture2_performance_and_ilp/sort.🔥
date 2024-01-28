@@ -1,0 +1,23 @@
+import time
+
+def sort_list(ls):
+    return ls.sort()
+
+def main():
+    file_name = "sort-rand-10.txt"
+    with open(file_name, "r") as f:
+        var st = f.read()
+        st.split("\n")
+        print(st)
+        # for line in f.read():
+        #     print(line)
+        # key2value = {
+        #     key: float(value)
+        #     for key, value in [line.split(":") for line in f.read().splitlines()]
+        # }
+
+    # unsorted_list = f.read()
+
+    # start_time = time.now()
+    # sort_list(unsorted_list)
+    # print("{(time.time() - start_time)*1e3} ms")
